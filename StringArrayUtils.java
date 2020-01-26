@@ -177,12 +177,24 @@ public class StringArrayUtils {
                 }
             
                 else {
-                    newArray.add(s);
+                    newArray.add(str);
                 }
+            }
+            
+            if (i == array.length - 1) {
+              newArray.add(array[i]);
             }
         }
         
-        return null;
+        String[] resultingArray = new String[newArray.size()];
+        int j = 0;
+        
+        for (String s : newArray) {
+            resultingArray[j] = s;
+            j++;
+        }
+        
+        return resultingArray;
     }
 
     /**
@@ -190,7 +202,43 @@ public class StringArrayUtils {
      * @return array of Strings with each consecutive duplicate occurrence concatenated as a single string in an array of Strings
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
-        return null;
+        ArrayList<String> packArray = new ArrayList<String>();
+        String packChar = "";
+        
+        for (int i = 0; i < array.length; i++) {
+            if (i < array.length - 1) {
+                String str = array[i];
+                String consecutiveStr = array[i+1];
+                if (str.equals(consecutiveStr)) {
+                    packChar += str;
+                }
+                else {
+                    packChar += str;
+                    packArray.add(packChar);
+                    packChar = "";
+                }
+            }
+            
+            if (i == array.length - 1) {
+                if (array[i] == array[i-1]) {
+                    packChar += array[i];
+                    packArray.add(packChar);
+                }
+                else {
+                    packArray.add(array[i]);
+                }
+            }
+        } 
+        
+        String[] resultingArray = new String[packArray.size()];
+        int j = 0;
+        
+        for (String s : packArray) {
+            resultingArray[j] = s;
+            j++;
+        }
+        
+        return resultingArray;
     }
     
     public static void main(String[] args) {
@@ -200,6 +248,8 @@ public class StringArrayUtils {
         String[] strArr = {"OOP", "OOP", "Principles", "-", "Abstraction", "Inheritance", "Polymorhism"};
         String[] palindromeArr = {"OOP", "Principles", "OOP"};
         String[] pangramicArr = {"The quick", "Fox jumps over", "The lazy dog"};
+        String[] array = {"aba", "aba", "baa", "bab", "bba", "zzz", "bba", "bba", "bba", "aba", "bbb"};
+        String[] charArray = {"t", "t", "q", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e"};
         
         System.out.println("First element of the array: " + strArrUtilsObject.getFirstElement(strArr));
         System.out.println("Second element of the array: " + strArrUtilsObject.getSecondElement(strArr));
@@ -211,8 +261,9 @@ public class StringArrayUtils {
         System.out.println("isPaangramic: " + strArrUtilsObject.isPangramic(pangramicArr));
         System.out.println("Number of occurences: " + strArrUtilsObject.getNumberOfOccurrences(strArr, "OOP"));
         System.out.println("Remove value from string array: " + Arrays.toString(strArrUtilsObject.removeValue(strArr, "OOP")));
-        System.out.println("Remove Consecutive Values: " + Arrays.toString(strArrUtilsObject.removeConsecutiveDuplicates(strArr)));
-    
+        System.out.println("Remove Consecutive Duplicates: " + Arrays.toString(strArrUtilsObject.removeConsecutiveDuplicates(array)));
+        System.out.println("Pack Consecutive Duplicates: " + Arrays.toString(strArrUtilsObject.packConsecutiveDuplicates(charArray)));
+
     }
 
 
